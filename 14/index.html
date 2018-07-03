@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>pictures</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/jquery.dad.css">
+    <link rel="stylesheet" href="css/viewer.min.css">
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="js/jquery.dad.min.js"></script>
+    <script src="js/viewer.min.js"></script>
+    <style>
+        #dowebok { width: 700px; margin: 0 auto; font-size: 0;}
+        #dowebok li { display: inline-block; width: 32%; margin-left: 1%; padding-top: 1%;}
+        #dowebok li img { width: 100%;}
+    </style>
+</head>
+<body>
+<div  style="width:800px;height:600px;border: 1px solid #dddddd;">
+    <div class="item_container" style="width: 100%;"></div>
+</div>
+<ul id="dowebok"  style="display: none;"></ul>
+<script>
+    $(document).ready(function(){
+        initPic();
+    });
+    var viewer ;
+    function initPic(){
+        var url_list = ['img/1.png','img/2.png','img/3.png','img/4.png','img/5.png','img/6.png','img/7.png'];
+        var html = "";
+        var look_html = "";
+        for(var i=0;i<url_list.length;i++){
+            html += '<div class="item">';
+            html += '<img class = "drag_img" img_index="'+i+'" src="'+url_list[i]+'" width="150" height="150">';
+            html += '<span  class="rmPicture close">×</span>';
+            html += '</div>';
+            look_html += '<li><img  img_index="'+i+'"  src="'+url_list[i]+'"></li>';
+        }
+        $(".item_container").html(html);
+        $("#dowebok").html(look_html);
+        initDragHtml();
+         viewer = new Viewer(document.getElementById('dowebok'), {url: 'src'});
+    }
+    $(".item_container").on("click",".close",function(){
+        $(this).parent().remove();
+        initDragHtml();
+    });
+    //照片全屏预览
+    $(".item_container").on("dblclick","img",function(){
+        $("#dowebok").children().eq(Number($(this).attr("img_index"))).children().eq(0).click();
+        $(this).parent().parent().children(".item").css("z-index","0");
+    });
+</script>
+</body>
+</html>
